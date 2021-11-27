@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/TendiF/grpc-stockbit/proto"
-	"github.com/TendiF/grpc-stockbit/service/chat"
+	"github.com/TendiF/grpc-stockbit/service/movie"
 
 	"google.golang.org/grpc"
 )
@@ -17,11 +17,11 @@ func main() {
 		log.Fatalf("fail to listen on port 9000: %v", err)
 	}
 
-	s := chat.Server{}
+	s := movie.Server{}
 
 	grpcServer := grpc.NewServer()
 
-	proto.RegisterChatServiceServer(grpcServer, &s)
+	proto.RegisterMovieServiceServer(grpcServer, &s)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve gRPC server over port 9000: %v", err)
