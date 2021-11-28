@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/TendiF/grpc-stockbit/proto"
 	"github.com/TendiF/grpc-stockbit/types"
+	"github.com/golang/glog"
 )
 
 type Server struct {
@@ -22,12 +22,12 @@ func (s *Server) GetMovies(ctx context.Context, params *proto.GetMovieParams) (*
 	resp, err := http.Get("http://www.omdbapi.com/?apikey=faf7e5bb&s=" + params.Search + "&page=" + strconv.Itoa(int(params.Page)))
 
 	if err != nil {
-		log.Fatalln(err)
+		glog.Errorf(err.Error())
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		glog.Errorf(err.Error())
 	}
 
 	sb := string(body)
@@ -60,12 +60,12 @@ func (s *Server) GetDetailMovie(ctx context.Context, params *proto.GetDetailMovi
 	resp, err := http.Get("http://www.omdbapi.com/?apikey=faf7e5bb&i=" + params.Id)
 
 	if err != nil {
-		log.Fatalln(err)
+		glog.Errorf(err.Error())
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		glog.Errorf(err.Error())
 	}
 
 	sb := string(body)
@@ -74,7 +74,7 @@ func (s *Server) GetDetailMovie(ctx context.Context, params *proto.GetDetailMovi
 	error := json.Unmarshal([]byte(sb), &res)
 
 	if error != nil {
-		log.Fatalln(error)
+		glog.Errorf(error.Error())
 	}
 
 	response.Actors = res.Actors

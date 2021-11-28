@@ -3,29 +3,12 @@ package gateway
 import (
 	"fmt"
 	"net/http"
-	"path"
 	"strings"
 
 	"github.com/golang/glog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 )
-
-// openAPIServer returns OpenAPI specification files located under "/openapiv2/"
-func openAPIServer(dir string) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if !strings.HasSuffix(r.URL.Path, ".swagger.json") {
-			glog.Errorf("Not Found: %s", r.URL.Path)
-			http.NotFound(w, r)
-			return
-		}
-
-		glog.Infof("Serving %s", r.URL.Path)
-		p := strings.TrimPrefix(r.URL.Path, "/openapiv2/")
-		p = path.Join(dir, p)
-		http.ServeFile(w, r, p)
-	}
-}
 
 // allowCORS allows Cross Origin Resoruce Sharing from any origin.
 // Don't do this without consideration in production systems.
