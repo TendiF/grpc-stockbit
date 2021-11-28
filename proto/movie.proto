@@ -24,7 +24,42 @@ message Movie {
     string poster = 4;
 }
 
-message GetDetailMovieParams {}
+message GetDetailMovieParams {
+    string id = 1;
+}
+
+message GetMovieDetailResponse {
+    string title        = 1; 
+	string year         = 2;
+	string rated        = 3;
+	string released     = 4;
+	string runtime      = 5;
+	string genre        = 6;
+	string director     = 7;
+    string writer       = 8;
+	string actors       = 9;
+	string plot         = 10;
+	string language     = 11;
+	string country      = 12;
+	string awards       = 13;
+	repeated Rating ratings      = 14;
+	string metascore    = 15;
+	string imdbRating   = 16;
+	string imdbVotes    = 17;
+	string imdbID       = 18;
+	string DVD          = 19;
+	string boxOffice    = 20;
+	string production   = 21;
+	string website      = 22;
+	string response     = 23;
+	string type         = 24;
+	string poster       = 25;
+}
+
+message Rating {
+    string Source = 1;
+    string Value = 2;
+}
 
 service MovieService {
     rpc GetMovies(GetMovieParams) returns (GetMovieResponse) {
@@ -33,7 +68,7 @@ service MovieService {
         };
     }
 
-    rpc GetDetailMovie(GetDetailMovieParams) returns (GetDetailMovieParams) {
+    rpc GetDetailMovie(GetDetailMovieParams) returns (GetMovieDetailResponse) {
         option (google.api.http) = {
             get: "/api/v1/detail-movie"
         };
