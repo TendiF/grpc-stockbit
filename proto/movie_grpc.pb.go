@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MovieServiceClient interface {
-	GetMovies(ctx context.Context, in *GetMovieParams, opts ...grpc.CallOption) (*GetMovieParams, error)
+	GetMovies(ctx context.Context, in *GetMovieParams, opts ...grpc.CallOption) (*GetMovieResponse, error)
 	GetDetailMovie(ctx context.Context, in *GetDetailMovieParams, opts ...grpc.CallOption) (*GetDetailMovieParams, error)
 }
 
@@ -30,8 +30,8 @@ func NewMovieServiceClient(cc grpc.ClientConnInterface) MovieServiceClient {
 	return &movieServiceClient{cc}
 }
 
-func (c *movieServiceClient) GetMovies(ctx context.Context, in *GetMovieParams, opts ...grpc.CallOption) (*GetMovieParams, error) {
-	out := new(GetMovieParams)
+func (c *movieServiceClient) GetMovies(ctx context.Context, in *GetMovieParams, opts ...grpc.CallOption) (*GetMovieResponse, error) {
+	out := new(GetMovieResponse)
 	err := c.cc.Invoke(ctx, "/proto.MovieService/GetMovies", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (c *movieServiceClient) GetDetailMovie(ctx context.Context, in *GetDetailMo
 // All implementations should embed UnimplementedMovieServiceServer
 // for forward compatibility
 type MovieServiceServer interface {
-	GetMovies(context.Context, *GetMovieParams) (*GetMovieParams, error)
+	GetMovies(context.Context, *GetMovieParams) (*GetMovieResponse, error)
 	GetDetailMovie(context.Context, *GetDetailMovieParams) (*GetDetailMovieParams, error)
 }
 
@@ -60,7 +60,7 @@ type MovieServiceServer interface {
 type UnimplementedMovieServiceServer struct {
 }
 
-func (UnimplementedMovieServiceServer) GetMovies(context.Context, *GetMovieParams) (*GetMovieParams, error) {
+func (UnimplementedMovieServiceServer) GetMovies(context.Context, *GetMovieParams) (*GetMovieResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMovies not implemented")
 }
 func (UnimplementedMovieServiceServer) GetDetailMovie(context.Context, *GetDetailMovieParams) (*GetDetailMovieParams, error) {

@@ -1,3 +1,3 @@
 Generate proto
-1. cd proto 
-2. protoc --go_out=.. --go-grpc_out=.. *proto
+1. $ buf mod update
+2. $ admin@Tendi grpc-stockbit % buf generate
