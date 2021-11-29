@@ -55,7 +55,7 @@ func TestGetMovie(t *testing.T) {
 		Search: "batman",
 	})
 	if err != nil {
-		log.Fatalf("Error when calling SayHello: %s", err)
+		log.Fatalf("Error when calling TestGetMovie: %s", err)
 	}
 
 	log.Printf("movie : %d", response.GetTotalResults())
@@ -80,7 +80,7 @@ func TestDetailMovie(t *testing.T) {
 		Id: "tt2975590",
 	})
 	if err != nil {
-		log.Fatalf("Error when calling SayHello: %s", err)
+		log.Fatalf("Error when calling TestDetailMovie: %s", err)
 	}
 
 	log.Printf("movie : %s", response.GetTitle())

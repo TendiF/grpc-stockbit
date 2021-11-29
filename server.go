@@ -8,6 +8,7 @@ import (
 	"github.com/TendiF/grpc-stockbit/gateway"
 	"github.com/TendiF/grpc-stockbit/proto"
 	"github.com/TendiF/grpc-stockbit/service/movie"
+	"github.com/TendiF/grpc-stockbit/utils"
 	"github.com/golang/glog"
 	"google.golang.org/grpc"
 )
@@ -45,7 +46,9 @@ func main() {
 		glog.Errorf("fail to listen on port 9000: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		utils.WithServerUnaryInterceptor(),
+	)
 
 	s := movie.Server{}
 
